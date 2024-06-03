@@ -1,3 +1,4 @@
+
 @extends('layouts.admin')
 
 @section('content')
@@ -29,6 +30,7 @@
                         <h5 class="mb-4">&propto; Number of Projects stored in <em>Database</em>: {{ $num_projects }}</h5>
 
                         <h5>&propto; Last Project added:</h5>
+                        @if($last_project)
                         <div class="ms-5">
                             <div class="container mb-2">
                                 <h5 class="text-primary fw-bold">{{ $last_project->name }}
@@ -45,10 +47,12 @@
                                 <p>{!! $last_project->description !!}</p>
                             </div>
                         </div>
+                        @else
+                        <p class="text-center">No project available</p>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
 
