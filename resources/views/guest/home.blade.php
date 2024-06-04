@@ -8,7 +8,7 @@
             Welcome to Boolfolio
         </h1>
         <div class="gif-container d-flex justify-content-center">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/Portfolio_.gif" alt="portfolio-gif">
+            <img src="https://gomycode.com/wp-content/uploads/2023/09/39998-web-development.gif" alt="portfolio-gif">
         </div>
     </div>
 </div>
