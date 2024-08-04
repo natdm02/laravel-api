@@ -9,9 +9,17 @@ use App\Models\Project;
 
 class ProjectController extends Controller
 {
-    public function index(){
+    public function index() {
+
         $projects = Project::with('type', 'technologies')->get();
 
         return response()->json($projects);
+    }
+
+    public function details($slug) {
+
+        $project = Project::where('slug', $slug)->with('type', 'technologies')->first();
+
+        return response()->json($project);
     }
 }

@@ -31,6 +31,12 @@ class ProjectController extends Controller
         return view('admin.projects.index', compact('projects', 'direction'));
     }
 
+    // public function technologiesProject() {
+    //     $technologies = Technology::all();
+
+    //     //incompleto
+    // }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -41,7 +47,7 @@ class ProjectController extends Controller
         $project_type = Type::all();
         $project_technology = Technology::all();
 
-        return view('admin.projects.edit', compact('project', 'project_type', 'project_technology'));
+        return view('admin.projects.create', compact('project_type', 'project_technology'));
     }
 
     /**
@@ -69,6 +75,10 @@ class ProjectController extends Controller
 
         $new_project->save();
 
+        if (array_key_exists('technologies', $form_data)) {
+            $new_project->technologies()->attach($form_data['technologies']);
+        }
+
         return redirect()->route('admin.projects.show', $new_project);
     }
 
@@ -93,7 +103,9 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $project_type = Type::all();
-        return view('admin.projects.edit', compact('project', 'project_type'));
+        $project_technology = Technology::all();
+
+        return view('admin.projects.edit', compact('project', 'project_type', 'project_technology'));
     }
 
     /**
@@ -120,6 +132,12 @@ class ProjectController extends Controller
             $form_data['image_path'] = Storage::put('uploads', $form_data['image']);
         }
 
+        if (array_key_exists('technologies', $form_data)) {
+            $project->technologies()->sync($form_data['technologies']);
+        }else{
+            $project->technologies()->detach();
+        }
+
         $project->update(($form_data));
 
         return redirect()->route('admin.projects.show', $project);
@@ -137,14 +155,7 @@ class ProjectController extends Controller
             Storage::disk('public')->delete($project->image_path);
         }
 
-        if (array_key_exists('technologies', $form_data)) {
-            $project->technologies()->sync($form_data['technologies']);
-        }else{
-            $project->technologies()->detach();
-        }
-
-
-        $project->delete(($form_data));
+        $project->delete();
 
         return redirect()->route('admin.projects.index')->with('deleted', "The Project '$project->name' <- has been succesfully deleted");
     }

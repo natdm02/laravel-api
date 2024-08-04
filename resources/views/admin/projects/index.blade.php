@@ -55,19 +55,6 @@
                                     class="fa-solid fa-pencil fa-lg"></i></a>
 
                             @include('admin.partials.delete-form')
-                            {{-- <form
-                                action="{{ route('admin.projects.destroy', $project) }}"
-                                method="POST"
-                                class="d-inline"
-                                onsubmit="return confirm('The project -> {{ $project->name }} will be deleted, are you sure?')">
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit" class="btn btn-danger fw-bold">
-                                    <i class="fa-solid fa-trash-can fa-lg"></i>
-                                </button>
-
-                            </form> --}}
 
                         </td>
                     </tr>

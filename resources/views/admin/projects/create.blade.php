@@ -49,20 +49,6 @@
                         @enderror
                 </div>
 
-                {{-- <div class="input-group mb-3">
-                    <input
-                    class="form-control mb-3"
-                    onchange="showImage(event)"
-                    id="image"
-                    name="image"
-                    type="file"
-                    >
-
-                    <div>
-                        <img id="preview-image" src="" alt="" width="150">
-                    </div>
-                </div> --}}
-
                 <div class="mb-1">
                     <label for="image" class="form-label">Upload Image</label>
                     <input type="file" class="form-control" onchange="showImage(event)" id="image" name="image" aria-describedby="upload" aria-label="Upload">

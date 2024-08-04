@@ -19,4 +19,6 @@ Route::namespace('Api')
         ->prefix('projects')
         ->group(function(){
             Route::get('/', [ProjectController::class, 'index']);
+            Route::get('/details/{slug}', [ProjectController::class, 'details']);
         });
+Route::post('/contacts', [LeadController::class,'store']);

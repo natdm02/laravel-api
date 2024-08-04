@@ -1,5 +1,11 @@
 <nav class="navbar top_navbar navbar-expand-md shadow-sm">
     <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+            <div class="logo">
+                <img src="/logo.png" alt="logo" class="w-75">
+            </div>
+            {{-- config('app.name', 'Laravel') --}}
+        </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -32,9 +38,9 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item text-light" href="{{ url('dashboard') }}">{{__('Dashboard')}}</a>
-                        <a class="dropdown-item text-light" href="{{ url('profile') }}">{{__('Profile')}}</a>
-                        <a class="dropdown-item text-light" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        <a class="dropdown-item text-dark" href="{{ route('admin.home') }}">{{__('Dashboard')}}</a>
+                        {{-- <a class="dropdown-item text-dark" href="{{ url('profile') }}">{{__('Profile')}}</a> --}}
+                        <a class="dropdown-item text-dark" href="{{ route('logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
