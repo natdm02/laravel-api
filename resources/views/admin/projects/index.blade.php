@@ -4,25 +4,53 @@
 
 @section('content')
 
-<div class="container">
-    <div class="text-center">
-        <h1>Progetti</h1>
+    <div class="container">
+        <h1 class="text-center">lista progetti</h1>
+
+    @if(session('success'))
+
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <a href="{{ route('projects.create') }}" class="btn btn-primary mb-3">Crea Nuovo Progetto</a>
+
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titolo</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach($projects as $project)
+
+                <tr>
+                    <td>{{ $project->id }}</td>
+                    <td>{{ $project->title }}</td>
+                    <td>
+                        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning">Modifica</a>
+                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Elimina</button>
+                        </form>
+                    </td>
+                </tr>
+
+            @endforeach
+
+        </tbody>
+
+    </table>
+
     </div>
 
-    <div class="row">
-        @forelse($projects as $project)
+@endsection
 
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $project->title }}</h5>
-                        <p class="card-text">{{ $project->description }}</p>
-                    </div>
-                </div>
-            </div>
-
-        @empty
-        @endforelse
-    </div>
-</div>
 

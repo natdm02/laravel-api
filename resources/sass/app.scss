@@ -1,24 +1,27 @@
-// Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
+//welcome scss
+@use 'welcome';
 
 // Variables
-@import 'variables';
+@use 'variables';
 
 // Bootstrap
-@import 'bootstrap/scss/bootstrap';
+@use 'node_modules/bootstrap/scss/bootstrap' as *;
 
 
 
-body {
-    background-color: white;
-    color:black;
-}
 
-header {
-    margin-bottom: 20px;
-}
 
-footer {
-    background-color: white;
-    padding: 10px 0;
-}
+
+// body {
+//     background-color: white;
+//     color:black;
+// }
+
+// header {
+//     margin-bottom: 20px;
+// }
+
+// footer {
+//     background-color: white;
+//     padding: 10px 0;
+// }
