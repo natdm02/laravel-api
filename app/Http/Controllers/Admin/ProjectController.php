@@ -40,7 +40,7 @@ class ProjectController extends Controller
 
         Project::create($request->all());
 
-        return redirect()->route('projects.index')->with('success');
+        return redirect()->route('admin.projects.index')->with('success');
     }
 
     /**
@@ -56,6 +56,7 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
+        $project = Project::findOrFail($id);
         return view('admin.projects.edit', compact('project'));
     }
 
