@@ -4,6 +4,9 @@
 
 @section('content')
 
+{{-- @vite('resources/sass/welcome.scss') --}}
+
+
 <div class="text-center">
 
     <h1>benvenuto nel tuo portfolio!</h1>
