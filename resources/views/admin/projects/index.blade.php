@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <a href="{{ route('projects.create') }}" class="btn btn-primary mb-3">Crea Nuovo Progetto</a>
+    <a href="{{ route('admin.projects.create') }}" class="btn btn-primary mb-3">Crea Nuovo Progetto</a>
 
     <table class="table table-bordered">
 
@@ -34,8 +34,8 @@
                     <td>{{ $project->id }}</td>
                     <td>{{ $project->title }}</td>
                     <td>
-                        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning">Modifica</a>
-                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline-block;">
+                        <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning">Modifica</a>
+                        <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Elimina</button>
