@@ -65,7 +65,19 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+
+        $request->validate([
+            'title' => 'required',
+            'description' => 'nullable',
+    ]);
+
+
+        $project->update($request->all());
+
+
+        return redirect()->route('admin.projects.index')->with('success');
     }
 
     /**
@@ -73,6 +85,11 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        $project->delete();
+
+
+        return redirect()->route('admin.projects.index')->with('success', 'Progetto eliminato con successo!');
     }
 }
