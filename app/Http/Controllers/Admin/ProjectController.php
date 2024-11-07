@@ -36,16 +36,14 @@ class ProjectController extends Controller
     {
         $request->validate([
 
-            'name' => 'required|string|max:255',
+            'name'    => 'required|string|max:255',
             'type_id' => 'required|exists:types,id',
 
         ]);
 
 
         Project::create($request->all());
-
-
-        return redirect('/admin/projects');
+        return redirect()->route('admin.projects.index');
     }
 
     /**
@@ -53,7 +51,9 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $project = Project::with('type')->findOrFail($id);
+        return view('admin.projects.show', compact('project'));
+
     }
 
     /**
@@ -78,12 +78,11 @@ class ProjectController extends Controller
 
             'name'    => 'required|string|max:255',
             'type_id' => 'required|exists:types,id',
-    ]);
+        ]);
 
-    $project->update($request->all());
+        $project->update($request->all());
 
-
-        return redirect('/admin/projects');
+        return redirect()->route('admin.projects.index');
     }
 
     /**
@@ -94,7 +93,6 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
 
         $project->delete();
-
 
         return redirect()->route('admin.projects.index')->with('success');
     }
