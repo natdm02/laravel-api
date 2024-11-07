@@ -5,13 +5,27 @@
     @method('PUT')
 
     <div>
-        <label for="title">Titolo</label>
-        <input type="text" name="title" id="title" value="{{ $project->title }}" required>
+        <label for="name">Titolo</label>
+        <input type="text" name="name" id="name" value="{{ $project->title }}" required>
     </div>
 
     <div>
         <label for="description">Descrizione</label>
         <textarea name="description" id="description">{{ $project->description }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="type_id">Tipo di Progetto</label>
+        <select name="type_id" id="type_id" class="form-control">
+
+            @foreach ($types as $type)
+
+                <option value="{{ $type->id }}" {{ $project->type_id == $type->id ? 'selected' : '' }}>
+                    {{ $type->name }}
+                </option>
+
+            @endforeach
+        </select>
     </div>
 
     <button type="submit">Aggiorna</button>
