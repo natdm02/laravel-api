@@ -13,7 +13,9 @@ class TypeSeeder extends Seeder
      */
     public function run(): void
     {
-        Type::create(['name' => 'Tipo di esempio']);
-        Type::create(['name' => 'Altro tipo']);
+        Type::create(['name' => 'Full-stack']);
+        Type::create(['name' => 'Front-end']);
+        Type::create(['name' => 'Back-end']);
+        Type::create(['name' => 'Database']);
     }
 }
