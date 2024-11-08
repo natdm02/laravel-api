@@ -6,27 +6,33 @@
 
     <div>
         <label for="name">Titolo</label>
-        <input type="text" name="title" id="name" value="{{ $project->title }}" required>
+        <input type="text" name="name" id="name" value="{{ old('name', $project->title) }}">
+        @error('name')
+            <div class="error">{{ $message }}</div>
+        @enderror
     </div>
 
     <div>
         <label for="description">Descrizione</label>
-        <textarea name="description" id="description">{{ $project->description }}</textarea>
+        <textarea name="description" id="description">{{ old('description', $project->description) }}</textarea>
+        @error('description')
+            <div class="error">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="form-group">
         <label for="type_id">Tipo di Progetto</label>
         <select name="type_id" id="type_id" class="form-control">
-
             @foreach ($types as $type)
-
-                <option value="{{ $type->id }}" {{ $project->type_id == $type->id ? 'selected' : '' }}>
+                <option value="{{ $type->id }}" {{ old('type_id', $project->type_id) == $type->id ? 'selected' : '' }}>
                     {{ $type->name }}
                 </option>
-
             @endforeach
         </select>
+        @error('type_id')
+            <div class="error">{{ $message }}</div>
+        @enderror
     </div>
 
-    <button type="submit">Aggiorna</button>
+    <button type="submit">Salva</button>
 </form>
