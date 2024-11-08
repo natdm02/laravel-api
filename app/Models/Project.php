@@ -12,7 +12,7 @@ class Project extends Model
 
     {
 
-        return $this->belongsTo(Type::class);
+        return $this->belongsToMany(Type::class);
 
     }
 }
