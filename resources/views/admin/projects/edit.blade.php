@@ -6,7 +6,7 @@
 
     <div>
         <label for="name">Titolo</label>
-        <input type="text" name="name" id="name" value="{{ $project->title }}" required>
+        <input type="text" name="title" id="name" value="{{ $project->title }}" required>
     </div>
 
     <div>

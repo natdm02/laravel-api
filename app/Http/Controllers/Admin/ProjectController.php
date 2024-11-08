@@ -15,6 +15,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        // dd('index');
+
         $projects = Project::all();
         return view('admin.projects.index', compact('projects'));
     }
@@ -26,7 +28,7 @@ class ProjectController extends Controller
     {
 
         $types = Type::all();
-        return view('admin.projects.create',compact('types') );
+        return view('admin.projects.create', compact('types') );
     }
 
     /**
@@ -34,16 +36,27 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
+        //  dd($request->all());
+
+
         $request->validate([
 
             'name'    => 'required|string|max:255',
+            'description' => 'nullable|string',
             'type_id' => 'required|exists:types,id',
 
         ]);
 
+        Project::create([
+            'title' => $request->name,
+            'description' => $request->description,
+            'type_id' => $request->type_id,
+        ]);
 
-        Project::create($request->all());
-        return redirect()->route('admin.projects.index');
+
+        // Project::create($request->all());
+        return redirect()->route('admin.projects.index')->with('success', 'Progetto creato con successo!');
     }
 
     /**
@@ -80,9 +93,15 @@ class ProjectController extends Controller
             'type_id' => 'required|exists:types,id',
         ]);
 
-        $project->update($request->all());
+        $project->update([
+            'title' => $request->name,
+            'description' => $request->description,
+            'type_id' => $request->type_id,
+        ]);
 
-        return redirect()->route('admin.projects.index');
+        // $project->update($request->all());
+
+        return redirect()->route('admin.projects.index')->with('success', 'Progetto aggiornato con successo!');
     }
 
     /**
@@ -94,6 +113,6 @@ class ProjectController extends Controller
 
         $project->delete();
 
-        return redirect()->route('admin.projects.index')->with('success');
+        return redirect()->route('admin.projects.index')->with('success','eliminato');
     }
 }
