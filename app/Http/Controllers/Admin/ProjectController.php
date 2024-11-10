@@ -39,10 +39,10 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
-        //  dd($request->all());
+     dd($request->all());
 
 
-        $request->validate([
+        $validate = $request->validate([
 
             'name'    => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -98,32 +98,25 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
+    $request->validate([
+        'name'    => 'required|string|max:255',
+        'type_id' => 'required|exists:types,id',
+        'technologies' => 'nullable|array',
+        'technologies.*' => 'exists:technologies,id',
+    ]);
 
-        $request->validate([
+    $project->update([
+        'name' => $request->name,
+        'description' => $request->description,
+        'type_id' => $request->type_id,
+    ]);
 
-            'name'    => 'required|string|max:255',
-            'type_id' => 'required|exists:types,id',
-            'technologies' => 'nullable|array',
-            'technologies.*' => 'exists:technologies,id',
-        ]);
 
-        $project->update([
-            'title' => $request->name,
-            'description' => $request->description,
-            'type_id' => $request->type_id,
-            'technologies' => 'required|array',
-            'technologies.*' => 'exists:technologies,id',
-        ]);
+    if ($request->has('technologies')) {
+        $project->technologies()->sync($request->technologies);
+    }
 
-        // $project->update($request->all());
-
-        if ($request->has('technologies')) {
-            $project->technologies()->sync($request->technologies);
-        }
-
-        // $project->technologies()->sync($request->technologies);
-
-        return redirect()->route('admin.projects.index')->with('success', 'Progetto aggiornato con successo!');
+    return redirect()->route('admin.projects.index')->with('success', 'Progetto aggiornato con successo!');
     }
 
     /**

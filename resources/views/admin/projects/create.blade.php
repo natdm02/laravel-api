@@ -20,7 +20,7 @@
 
     <div class="form-group">
         <label for="type_id">Tipo di Progetto</label>
-        <select name="type_id" id="type_id" class="form-control">
+        <select name="type_id" id="type_id" class="form-control" required>
             @foreach ($types as $type)
                 <option value="{{ $type->id }}" {{ old('type_id') == $type->id ? 'selected' : '' }}>
                     {{ $type->name }}
@@ -41,7 +41,12 @@
                     {{ $technology->name }}
                 </option>
             @endforeach
+
         </select>
+        @error('technologies')
+        <div class="error">{{ $message }}</div>
+        @enderror
+
     </div>
 
 
