@@ -32,5 +32,18 @@
         @enderror
     </div>
 
+    <div class="form-group">
+        <label for="technologies">Tecnologie</label>
+        <select name="technologies[]" id="technologies" class="form-control" multiple required>
+            @foreach ($technologies as $technology)
+                <option value="{{ $technology->id }}"
+                    {{ in_array($technology->id, old('technologies', [])) ? 'selected' : '' }}>
+                    {{ $technology->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+
     <button type="submit">Salva</button>
 </form>
