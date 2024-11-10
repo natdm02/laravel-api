@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('image')->nullable();
+            $table->foreignId('type_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
