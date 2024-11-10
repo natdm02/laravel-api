@@ -6,7 +6,7 @@
 
     <div>
         <label for="name">Titolo</label>
-        <input type="text" name="name" id="name" value="{{ old('name', $project->title) }}">
+        <input type="text" name="name" id="name" value="{{ old('name', $project->name) }}">
         @error('name')
             <div class="error">{{ $message }}</div>
         @enderror
@@ -33,6 +33,23 @@
             <div class="error">{{ $message }}</div>
         @enderror
     </div>
+
+    <div class="form-group">
+        <label for="technologies">Tecnologie</label>
+        <select name="technologies[]" id="technologies" class="form-control" multiple required>
+            @foreach ($technologies as $technology)
+                <option value="{{ $technology->id }}"
+                    {{ in_array($technology->id, old('technologies', [])) ? 'selected' : '' }}>
+                    {{ $technology->name }}
+                </option>
+            @endforeach
+        </select>
+        @error('technologies')
+            <div class="error">{{ $message }}</div>
+        @enderror
+    </div>
+
+
 
     <button type="submit">Salva</button>
 </form>
