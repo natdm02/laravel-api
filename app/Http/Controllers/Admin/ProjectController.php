@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Project;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 
 
 class ProjectController extends Controller
@@ -28,7 +29,8 @@ class ProjectController extends Controller
     {
 
         $types = Type::all();
-        return view('admin.projects.create', compact('types') );
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types','technologies' ) );
     }
 
     /**
@@ -45,14 +47,18 @@ class ProjectController extends Controller
             'name'    => 'required|string|max:255',
             'description' => 'nullable|string',
             'type_id' => 'required|exists:types,id',
+            'technologies' => 'required|array',
+            'technologies.*' => 'exists:technologies,id',
 
         ]);
 
-        Project::create([
-            'title' => $request->name,
+        $project= Project::create([
+            'name' => $request->name,
             'description' => $request->description,
             'type_id' => $request->type_id,
         ]);
+
+        $project->technologies()->sync($request->technologies);
 
 
         // Project::create($request->all());
@@ -74,10 +80,15 @@ class ProjectController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
+
     {
-        $project = Project::findOrFail($id);
+
+        $project = Project::with('technologies')->findOrFail($id);
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
+
     }
 
     /**
@@ -92,15 +103,25 @@ class ProjectController extends Controller
 
             'name'    => 'required|string|max:255',
             'type_id' => 'required|exists:types,id',
+            'technologies' => 'nullable|array',
+            'technologies.*' => 'exists:technologies,id',
         ]);
 
         $project->update([
             'title' => $request->name,
             'description' => $request->description,
             'type_id' => $request->type_id,
+            'technologies' => 'required|array',
+            'technologies.*' => 'exists:technologies,id',
         ]);
 
         // $project->update($request->all());
+
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($request->technologies);
+        }
+
+        // $project->technologies()->sync($request->technologies);
 
         return redirect()->route('admin.projects.index')->with('success', 'Progetto aggiornato con successo!');
     }
