@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\TechnologyController;
 
 // rotta di welcome
 Route::get('/', function () {
@@ -19,6 +20,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource( 'projects', ProjectController::class );
+    Route::resource('technologies', TechnologyController::class);
 });
 
 
