@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Type;
 use App\Models\Technology;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class ProjectController extends Controller
@@ -44,25 +46,35 @@ class ProjectController extends Controller
 
         $request->validate([
 
-            'name'    => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'type_id' => 'required|exists:types,id',
-            'technologies' => 'required|array',
+            'name'           => 'required|string|max:255',
+            'description'    => 'nullable|string',
+            'type_id'        => 'required|exists:types,id',
+            'technologies'   => 'required|array',
             'technologies.*' => 'exists:technologies,id',
 
         ]);
 
 
         $project= Project::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'type_id' => $request->type_id,
+
+            'name'           => $request->name,
+            'description'    => $request->description,
+            'type_id'        => $request->type_id,
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('projects', 'public'); // Salvataggio immagine
+            $project->image = $path;
+            $project->save();
+        }
+
+        $project->technologies()->sync($request->technologies);
 
         $project->technologies()->sync($request->technologies);
 
 
         // Project::create($request->all());
+
         return redirect()->route('admin.projects.index')->with('success', 'Progetto creato con successo!');
     }
 
@@ -100,18 +112,31 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
-    $request->validate([
-        'name'    => 'required|string|max:255',
-        'type_id' => 'required|exists:types,id',
-        'technologies' => 'nullable|array',
+        $request->validate([
+
+        'name'           => 'required|string|max:255',
+        'type_id'        => 'required|exists:types,id',
+        'technologies'   => 'nullable|array',
         'technologies.*' => 'exists:technologies,id',
     ]);
 
-    $project->update([
-        'name' => $request->name,
-        'description' => $request->description,
-        'type_id' => $request->type_id,
+        $project->update([
+
+        'name'           => $request->name,
+        'description'    => $request->description,
+        'type_id'        => $request->type_id,
     ]);
+
+    if ($request->hasFile('image')) {
+
+        if ($project->image) {
+            Storage::disk('public')->delete($project->image);
+        }
+
+        $path = $request->file('image')->store('projects', 'public');
+                $project->image = $path;
+                $project->save();
+    }
 
 
     if ($request->has('technologies')) {
@@ -127,6 +152,10 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         $project = Project::findOrFail($id);
+
+        if ($project->image) {
+            Storage::disk('public')->delete($project->image);
+        }
 
         $project->delete();
 
