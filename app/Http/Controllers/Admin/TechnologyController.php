@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Technology;
 use Illuminate\Http\Request;
 
 class TechnologyController extends Controller
@@ -12,7 +13,8 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        //
+        $technologies = Technology::all();
+        return view('admin.technologies.index', compact('technologies'));
     }
 
     /**
@@ -20,7 +22,7 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.technologies.create');
     }
 
     /**
@@ -28,7 +30,14 @@ class TechnologyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:technologies|max:255',
+        ]);
+
+        Technology::create($request->all());
+
+        return redirect()->route('admin.technologies.index')
+                         ->with('success', 'Technology created successfully.');
     }
 
     /**
@@ -43,8 +52,13 @@ class TechnologyController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
+
+
     {
-        //
+
+        $technology = Technology::findOrFail($id);
+
+        return view('admin.technologies.edit', compact('technology'));
     }
 
     /**
@@ -52,7 +66,16 @@ class TechnologyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $technology = Technology::findOrFail($id);
+        // $request->validate([
+        //     'name' => 'required|max:255|unique:technologies,name,' . $technology->id,
+        // ]);
+
+        $technology->update($request->all());
+
+        return redirect()->route('admin.technologies.index')
+                         ->with('success', 'Technology updated successfully.');
     }
 
     /**
@@ -60,6 +83,11 @@ class TechnologyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $technology = Technology::findOrFail($id);
+        $technology->delete();
+
+        return redirect()->route('admin.technologies.index')
+                         ->with('success', 'Technology deleted successfully.');
     }
 }
