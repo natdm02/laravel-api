@@ -49,6 +49,11 @@
 
     </div>
 
+    <div class="form-group">
+        <label for="image">Carica immagine</label>
+        <input type="file" name="image" id="image" class="form-control">
+    </div>
+
 
     <button type="submit">Salva</button>
 </form>

@@ -49,6 +49,14 @@
         @enderror
     </div>
 
+    <div class="form-group">
+        <label for="image">Carica immagine</label>
+        <input type="file" name="image" id="image" class="form-control">
+        @if ($project->image)
+            <img src="{{ asset('storage/' . $project->image) }}" alt="Immagine progetto" width="100">
+        @endif
+    </div>
+
 
 
     <button type="submit">Salva</button>
