@@ -32,7 +32,8 @@
 
                 <tr>
                     <td>{{ $project->id }}</td>
-                    <td>{{ $project->title }}</td>
+                    <td>{{ $project->name }}</td>
+                    <td>{{ $project->description }}</td>
                     <td>
                         <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning">Modifica</a>
                         <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-info">Dettagli</a>
