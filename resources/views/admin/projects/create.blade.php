@@ -44,7 +44,7 @@
 
         </select>
         @error('technologies')
-        <div class="error">{{ $message }}</div>
+            <div class="error">{{ $message }}</div>
         @enderror
 
     </div>

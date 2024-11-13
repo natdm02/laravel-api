@@ -39,10 +39,10 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
-     dd($request->all());
+        // dd('ciao');
 
 
-        $validate = $request->validate([
+        $request->validate([
 
             'name'    => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -51,6 +51,7 @@ class ProjectController extends Controller
             'technologies.*' => 'exists:technologies,id',
 
         ]);
+
 
         $project= Project::create([
             'name' => $request->name,
@@ -82,6 +83,7 @@ class ProjectController extends Controller
     public function edit(string $id)
 
     {
+
 
         $project = Project::with('technologies')->findOrFail($id);
         $types = Type::all();
