@@ -21,6 +21,10 @@
         <p>Nessuna tecnologia associata a questo progetto.</p>
     @endif
 
+    <div class="text-center my-4">
+        <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->name }}" class="img-fluid">
+    </div>
+
     <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Torna alla lista</a>
 </div>
 @endsection

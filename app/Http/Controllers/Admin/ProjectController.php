@@ -41,7 +41,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
-        // dd('ciao');
+
 
 
         $request->validate([
@@ -51,6 +51,8 @@ class ProjectController extends Controller
             'type_id'        => 'required|exists:types,id',
             'technologies'   => 'required|array',
             'technologies.*' => 'exists:technologies,id',
+            'image'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
 
         ]);
 
@@ -63,12 +65,10 @@ class ProjectController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('projects', 'public'); // Salvataggio immagine
+            $path = $request->file('image')->store('projects', 'public');
             $project->image = $path;
             $project->save();
         }
-
-        $project->technologies()->sync($request->technologies);
 
         $project->technologies()->sync($request->technologies);
 
