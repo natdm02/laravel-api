@@ -22,9 +22,7 @@
         <label for="type_id">Tipo di Progetto</label>
         <select name="type_id" id="type_id" class="form-control" required>
             @foreach ($types as $type)
-                <option value="{{ $type->id }}" {{ old('type_id') == $type->id ? 'selected' : '' }}>
-                    {{ $type->name }}
-                </option>
+                <option value="{{ $type->id }}" {{ old('type_id') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
             @endforeach
         </select>
         @error('type_id')
