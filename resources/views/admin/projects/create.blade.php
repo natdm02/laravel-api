@@ -1,6 +1,6 @@
 <h1>Crea Nuovo Progetto</h1>
 
-<form method="POST" action="{{ route('admin.projects.store') }}">
+<form method="POST" action="{{ route('admin.projects.store') }}" enctype="multipart/form-data">
     @csrf
     <div>
         <label for="name">Titolo</label>
