@@ -22,7 +22,7 @@
     @endif
 
     <div class="text-center my-4">
-        <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->name }}" class="img-fluid">
+        <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->name }}" style="max-width: 300px; height: auto;" >
     </div>
 
     <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Torna alla lista</a>
