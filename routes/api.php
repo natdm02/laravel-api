@@ -16,4 +16,6 @@ use App\Http\Controllers\Api\ProjectController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 Route::get('/projects', [ProjectController::class, 'index']);
+Route::get('/projects/{id}', [ProjectController::class, 'show']);
