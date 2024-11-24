@@ -30,3 +30,6 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
 })->name('logout');
+
+//github
+Route::get('/github-projects', [ProjectController::class, 'githubProjects'])->name('github.projects');

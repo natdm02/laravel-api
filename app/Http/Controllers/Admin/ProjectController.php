@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Type;
 use App\Models\Technology;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 
 
@@ -18,10 +19,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        // dd('index');
 
         $projects = Project::all();
         return view('admin.projects.index', compact('projects'));
+
     }
 
     /**
@@ -163,5 +164,20 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect()->route('admin.projects.index')->with('success','eliminato');
+    }
+
+    public function githubProjects()
+    {
+
+        $username = 'natdm02';
+
+        $response = Http::get("https://api.github.com/users/{$username}/repos");
+
+        if ($response->successful()) {
+            $repositories = $response->json();
+            return view('admin.projects.github', compact('repositories'));
+        }
+
+        return back()->withErrors('Errore nel recupero dei progetti da GitHub.');
     }
 }
