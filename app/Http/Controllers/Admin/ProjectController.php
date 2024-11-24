@@ -154,6 +154,8 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
+        $project->technologies()->detach();
+
         if ($project->image) {
             Storage::disk('public')->delete($project->image);
         }
